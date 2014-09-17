@@ -20,6 +20,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       chef.cookbooks_path = "cookbooks"
       chef.add_recipe "storm::localrepo"
       chef.add_recipe "storm::java"
+      chef.add_recipe "storm::zookeeper"
     end
   end
 
