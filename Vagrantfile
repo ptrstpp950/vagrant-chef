@@ -11,7 +11,18 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Every Vagrant virtual environment requires a box to build off of.
   config.vm.box = "centos-6.4"
+  config.vm.synced_folder "../internal-repo", "/vagrant_localrepo"
 
+  config.vm.define "nimbus" do |nimbus|
+    nimbus.vm.network "private_network", ip: "192.168.33.10"
+    nimbus.vm.hostname = "nimbus"
+    nimbus.vm.provision "chef_solo" do |chef|
+      chef.cookbooks_path = "cookbooks"
+      chef.add_recipe "storm::localrepo"
+    end
+  end
+
+  
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
   # `vagrant box outdated`. This is not recommended.
