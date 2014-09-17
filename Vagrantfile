@@ -19,6 +19,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     nimbus.vm.provision "chef_solo" do |chef|
       chef.cookbooks_path = "cookbooks"
       chef.add_recipe "storm::localrepo"
+      chef.add_recipe "storm::java"
     end
   end
 
