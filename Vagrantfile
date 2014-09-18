@@ -24,6 +24,17 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     end
   end
 
+  config.vm.define "worker" do |worker|
+    worker.vm.network "private_network", ip: "192.168.33.11"
+    worker.vm.hostname = "worker"
+    worker.vm.provision "chef_solo" do |chef|
+      chef.cookbooks_path = "cookbooks"
+      chef.add_recipe "storm::localrepo"
+      chef.add_recipe "storm::java"
+      chef.add_recipe "storm::zookeeper"
+    end
+  end
+
   
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
