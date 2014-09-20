@@ -22,6 +22,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       chef.add_recipe "storm::java"
       chef.add_recipe "storm::zookeeper"
       chef.add_recipe "storm::iptables"
+      chef.add_recipe "storm::nimbus"
     end
   end
 
@@ -34,6 +35,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       chef.add_recipe "storm::java"
       chef.add_recipe "storm::zookeeper"
       chef.add_recipe "storm::iptables"
+      chef.add_recipe "storm::stormSupervisor"
     end
   end
 
