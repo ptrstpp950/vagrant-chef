@@ -2,8 +2,8 @@ package "zookeeper" do
 	action :install
 end
 
-nodes = "192.168.33.10,192.168.33.11".split(",")
-ip = node[:network][:interfaces][:eth1][:addresses].detect{|k,v| v[:family] == "inet" }.first
+nodes = node[:zookeeper][:nodes].split(",")
+ip = node[:network][:interfaces][node[:zookeeper][:eth]][:addresses].detect{|k,v| v[:family] == "inet" }.first
 log "current node ip= "+ip
 
 node_index = Hash[nodes.map.with_index.to_a][ip]+1

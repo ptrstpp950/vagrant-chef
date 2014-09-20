@@ -14,7 +14,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.synced_folder "../internal-repo", "/vagrant_localrepo"
 
   config.vm.define "nimbus" do |nimbus|
-    nimbus.vm.network "private_network", ip: "192.168.33.10"
+    nimbus.vm.network "private_network", ip: "192.168.33.20"
     nimbus.vm.hostname = "nimbus"
     nimbus.vm.provision "chef_solo" do |chef|
       chef.cookbooks_path = "cookbooks"
@@ -23,11 +23,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       chef.add_recipe "storm::zookeeper"
       chef.add_recipe "storm::iptables"
       chef.add_recipe "storm::nimbus"
+      chef.json = { storm: {host:"192.168.33.20"}, zookeeper: {nodes:"192.168.33.20,192.168.33.21"} }
     end
   end
 
   config.vm.define "worker" do |worker|
-    worker.vm.network "private_network", ip: "192.168.33.11"
+    worker.vm.network "private_network", ip: "192.168.33.21"
     worker.vm.hostname = "worker"
     worker.vm.provision "chef_solo" do |chef|
       chef.cookbooks_path = "cookbooks"
@@ -36,6 +37,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       chef.add_recipe "storm::zookeeper"
       chef.add_recipe "storm::iptables"
       chef.add_recipe "storm::stormSupervisor"
+      chef.json = { storm: {host:"192.168.33.20"}, zookeeper: {nodes:"192.168.33.20,192.168.33.21"} }
     end
   end
 
